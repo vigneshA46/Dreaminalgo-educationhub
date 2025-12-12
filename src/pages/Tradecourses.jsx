@@ -1,9 +1,15 @@
 import React from 'react';
 import { MantineProvider, Container, Grid, Card, Text, Box, Group, Image, Flex } from '@mantine/core';
 import { IconStar, IconClockHour4, IconPlayerPlay, IconArrowRight } from '@tabler/icons-react';
-const CoreCourses = () => {
+import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 
-      const courses = [
+
+const Tradecourses = () => {
+
+    const navigattion = useNavigate();
+
+          const courses = [
     {
       id: 1,
       title: 'Python Course for Beginners',
@@ -50,7 +56,10 @@ const CoreCourses = () => {
     }
   ];
   return (
-     <Container size="lg" style={{ padding: '40px 0' }}>
+     <>
+    <Header />
+  <Box w={"100vw"} px={"2rem"} py={"2rem"} >
+        <Container size="lg" style={{ padding: '20px 0' }}>
         {/* Header */}
         <Box style={{ textAlign: 'center', marginBottom: '40px' }}>
           <Flex align={"center"} justify={"center"} gap={"2rem"} mt={"2rem"} style={{ marginBottom: '12px' }}>
@@ -76,7 +85,7 @@ const CoreCourses = () => {
                 fontSize: '16px'
               }}
             >
-              Free Courses by top Scaler instructors
+              Trade Courses by top trading instructors
             </Text>
           </Flex>
         </Box>
@@ -86,6 +95,7 @@ const CoreCourses = () => {
           {courses.map((course) => (
             <Grid.Col key={course.id} span={3}>
               <Card
+              onClick={()=>navigattion('/course')}
                 padding={0}
                 radius="lg"
                 style={{
@@ -228,7 +238,9 @@ const CoreCourses = () => {
           ))}
         </Grid>
       </Container>
+      </Box>
+      </>
   )
 }
 
-export default CoreCourses
+export default Tradecourses

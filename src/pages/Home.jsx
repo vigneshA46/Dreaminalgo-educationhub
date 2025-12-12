@@ -6,10 +6,12 @@ import Homebanner from '../components/Homebanner';
 import Header from '../components/Header';
 import Enrolled from '../components/Enrolled';
 import Features from '../components/Features';
-import CoreCourses from '../components/CoreCourses';
-import SingleCourse from '../components/SingleCourse';
+
+
 
 const Home = () => {
+
+  
   return (
     <>
     <Header />
@@ -17,8 +19,7 @@ const Home = () => {
     <Homebanner/>
     <Enrolled />
     <Features />
-    <CoreCourses />
-    <SingleCourse />
+   
     
   </Box>
   </>

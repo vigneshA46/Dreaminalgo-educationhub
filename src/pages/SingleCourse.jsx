@@ -20,9 +20,12 @@ import {
   IconChevronUp
 } from '@tabler/icons-react';
 import coursebg from '../assets/coursebg.jpeg'
+import Header from '../components/Header';
+import { useNavigate } from 'react-router-dom';
 
 
 const SingleCourse = () => {
+  const navigation = useNavigate();
 
     const [expandAll, setExpandAll] = useState(false);
 
@@ -78,17 +81,33 @@ const SingleCourse = () => {
 
   
   return (
+
+     <>
+        <Header />
+      <Box w={"100vw"} px={"6rem"} py={"2rem"} >
      <Container size="xl" style={{ padding: '40px 20px' }}>
       <Grid gutter="xl">
         {/* Left Column */}
         <Grid.Col span={{ base: 12, md: 8 }}>
           <Stack gap="lg">
             {/* Course Title */}
+            <Box h={"8rem"} bg={"#000"} style={{borderRadius:'1rem'}} >
+            <Image
+                src={coursebg}
+                w={"100%"}
+                style={{
+                    objectFit: 'cover',
+                    background:"#000",
+                    borderRadius:'1rem'
+                }}
+                h={"100%"}
+                />
+            </Box>
             <Box>
               <Title 
                 order={1} 
                 style={{ 
-                  fontSize: '1.8rem', 
+                  fontSize: '1.6rem', 
                   fontWeight: 600, 
                   color: '#1a1a2e',
                   marginBottom: '12px',
@@ -112,7 +131,7 @@ const SingleCourse = () => {
                 >
                   Rahul Janghu
                 </Text>
-                , Software Engineer and Instructor at Scaler{' '}
+                , Software Engineer and Instructor at Infosys{' '}
                 <Badge 
                   variant="filled" 
                   style={{ 
@@ -121,7 +140,7 @@ const SingleCourse = () => {
                     verticalAlign: 'middle'
                   }}
                 >
-                  SCALER
+                  Dreamin
                 </Badge>
               </Text>
             </Box>
@@ -721,6 +740,7 @@ const SingleCourse = () => {
                 {/* CTA Button */}
                 <Button 
                   fullWidth 
+                  onClick={()=>navigation("/playcourse")}
                   size="lg"
                   style={{ 
                     backgroundColor: '#2563eb',
@@ -752,6 +772,8 @@ const SingleCourse = () => {
 
      
     </Container>
+    </Box>
+    </>
   )
 }
 

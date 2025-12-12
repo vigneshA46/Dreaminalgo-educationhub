@@ -1,12 +1,17 @@
 import React from 'react';
 import { MantineProvider, Container, Grid, Card, Text, Box, Group, Flex } from '@mantine/core';
 import { IconPlayerPlay, IconCalendar, IconPuzzle, IconTool, IconArrowRight, IconTimeline, IconCode } from '@tabler/icons-react';
+import { useNavigate, useNavigation } from 'react-router-dom';
 
 
 const Features = () => {
+  const navigation = useNavigate()
+
   return (
         <Flex align={"center"} justify={"space-between"} >
             <Card
+
+            onClick={()=>navigation('/trade-courses')}
             h={"100%"}
             py={"1.5rem"}
             w={"48%"}
@@ -87,6 +92,9 @@ const Features = () => {
             </Card>
 
             <Card
+
+                  onClick={()=>navigation('/core-courses')}
+
             w={"48%"}
             py={"1.5rem"}
               p="md"

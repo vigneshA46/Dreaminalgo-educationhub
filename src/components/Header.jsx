@@ -2,20 +2,24 @@ import React from 'react';
 import { MantineProvider, Container, Group, Button, Text, Box, TextInput, Avatar, Badge, Menu, Image, Flex } from '@mantine/core';
 import { IconSearch, IconChevronDown } from '@tabler/icons-react';
 import logo from '../assets/logo.jpeg'
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+
+  const navigation = useNavigate();
   return (
    <Box
+   w={"100vw"}
     py={"1rem"}
         bg={"#Fff"}
         component="header"
-        sx={{ 
+        style={{ 
           height: '70px',
-          backgroundColor: '#2d3e50',
+          backgroundColor: '#ffffffff',
           position: 'sticky',
           top: 0,
           zIndex: 100,
-          borderBottom: 'none'
+          borderBottom: '1px solid #f5f5f5'
         }}
       >
         <Container size="100%" px={40} sx={{ height: '100%', maxWidth: '100%' }}>
@@ -42,7 +46,25 @@ const Header = () => {
 
               {/* Navigation Items */   }
               <Group spacing={8} style={{ height: '100%' }}>
-                
+                 <Button 
+                  variant="subtle"
+                  onClick={()=>navigation('/')}
+                  sx={{ 
+                    color: 'white',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    padding: '0 16px',
+                    height: '100%',
+                    borderRadius: 0,
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.08)'
+                    }
+                  }}
+                >
+                  Home
+
+
+                </Button>
 
                 <Button 
                   variant="subtle"
@@ -151,6 +173,7 @@ const Header = () => {
                 Login
               </Button>
                <Button
+               onClick={()=>navigation('/signup')}
                 bg={"#fff"}
                 c={"#0066ff"}
                 style={{border:'1px solid #0066ff'}}
