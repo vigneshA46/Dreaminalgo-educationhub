@@ -2,8 +2,13 @@
 import React from 'react';
 import { MantineProvider, Box, Container, Text, Button, Badge, Group, Card, List, ThemeIcon, Flex } from '@mantine/core';
 import { IconCheck, IconArrowRight } from '@tabler/icons-react';
+import { useUser } from '../context/UserContext';
+
 
 const Homebanner = () => {
+
+  const {user} = useUser();
+
   return (
      <Flex direction={"column"} justify={'center'} align={"center"} mb={"2.5rem"} style={{ backgroundColor: '#ffffffff', paddingTop: '20px', paddingBottom: '0px' }}  >
         
@@ -200,11 +205,11 @@ const Homebanner = () => {
           <Box
             style={{
               textAlign: 'center',
-              padding: '60px 20px',
+              padding: '30px 20px',
             }}
           >
             <Text size="32px" fw={600} c="#2c3e50" mb="md">
-              Welcome back, <Text component="span" fw={700} c="#1e3a5f">vignesh A!</Text>
+              Welcome back, <Text component="span" fw={700} c="#1e3a5f">{user?.fullname}</Text>
             </Text>
             <Text size="16px" c="#6c757d">
               Pick up where you left off

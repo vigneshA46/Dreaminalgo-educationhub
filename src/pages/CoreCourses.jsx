@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { MantineProvider, Container, Grid, Card, Text, Box, Group, Image, Flex } from '@mantine/core';
 import { IconStar, IconClockHour4, IconPlayerPlay, IconArrowRight } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,22 @@ import Header from '../components/Header';
 const CoreCourses = () => {
 
   const navigation = useNavigate();
+  const [corecourses , setcorecourses] = useState([]);
+  
+  
+    useEffect(()=>{
+      const fetchtradingcourses = async ()=>{
+        try{
+          const res = await apiRequest('GET','/api/courses/Core')
+          setcorecourses(res);
+        }catch(err){
+          console.log("error in tradin course",err)
+        }
+      }
+  
+      fetchtradingcourses();
+    },[])
+  
 
       const courses = [
     {
@@ -90,152 +106,126 @@ const CoreCourses = () => {
 
         {/* Course Cards Grid */}
         <Grid gutter={20}>
-          {courses.map((course) => (
-            <Grid.Col key={course.id} span={3}>
-              <Card
-
-              onClick={()=>navigation('/course')}
-                padding={0}
-                radius="lg"
-                style={{
-                  border: '1px solid #e9ecef',
-                  overflow: 'hidden',
-                  height: '100%',
-                  cursor: 'pointer',
-                  transition: 'transform 0.2s, box-shadow 0.2s',
-                  backgroundColor: 'white'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                {/* Course Image with Icon */}
-                <Box
+        {corecourses.map((course) => (
+          <Grid.Col key={course.id} span={3}>
+            <Card
+              onClick={() => navigattion(`/course/${course.id}`)}
+              withBorder="true"
+              padding={0}
+              radius="lg"
+              style={{
+                border: '1px solid #c9c9c9ff',
+                overflow: 'hidden',
+                height: '100%',
+                cursor: 'pointer',
+                transition: 'transform 0.2s, box-shadow 0.2s',
+                backgroundColor: 'white'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-4px)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              {/* Course Image */}
+             <Box
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '180px',
+          backgroundColor: '#000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <img
+          src={course.tumbnai}
+          alt={course.title}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+          }}
+          onError={(e) => {
+            e.currentTarget.style.display = 'none';
+          }}
+        />
+      
+        {/* Fallback icon */}
+        <IconPlayerPlay
+          size={56}
+          color="white"
+          style={{ position: 'absolute' }}
+        />
+      </Box>
+      
+      
+              {/* Course Content */}
+              <Box style={{ padding: '20px' }}>
+                {/* Title */}
+                <Text
+                  size="md"
+                  fw={600}
+                  mb={8}
                   style={{
-                    position: 'relative',
-                    width: '100%',
-                    height: '180px',
-                    backgroundColor: course.bgColor,
-                    backgroundImage: `url(${course.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    color: '#212529',
+                    lineHeight: '1.4',
+                    fontSize: '15px',
+                    minHeight: '42px'
                   }}
                 >
-                  <Box
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      transform: 'translate(-50%, -50%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: '60px',
-                        color: 'white',
-                        opacity: 0.9
-                      }}
-                    >
-                      {course.icon}
-                    </Text>
-                  </Box>
-                </Box>
-
-                {/* Course Content */}
-                <Box style={{ padding: '20px' }}>
-                  {/* Course Title */}
-                  <Text
-                    size="md"
-                    style={{
-                      color: '#212529',
-                      fontWeight: 600,
-                      marginBottom: '8px',
-                      lineHeight: '1.4',
-                      fontSize: '15px',
-                      minHeight: '42px'
-                    }}
-                  >
-                    {course.title}
+                  {course.title}
+                </Text>
+      
+                {/* Tutor */}
+                <Text
+                  size="xs"
+                  c="#6c757d"
+                  mb={12}
+                  style={{ fontSize: '12px' }}
+                >
+                  A course by {course.tutor}
+                </Text>
+      
+                {/* Description */}
+                <Text
+                  size="sm"
+                  c="#495057"
+                  style={{
+                    lineHeight: '1.6',
+                    marginBottom: '20px',
+                    fontSize: '13px',
+                    height: '80px',
+                    overflow: 'hidden',
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: 'vertical'
+                  }}
+                >
+                  {course.shortdescription}
+                </Text>
+      
+                {/* Footer */}
+                <Flex align="center" justify="space-between">
+                  {/* Price */}
+                  <Text size="sm" fw={600} c="#212529">
+                    {course.isfree ? 'Free' : `₹${course.price}`}
                   </Text>
-
-                  {/* Instructor */}
-                  <Text
-                    size="xs"
-                    style={{
-                      color: '#6c757d',
-                      marginBottom: '12px',
-                      fontSize: '12px'
-                    }}
-                  >
-                    A Course by {course.instructor}
+      
+                  {/* Category */}
+                  <Text size="xs" c="dimmed">
+                    {course.category}
                   </Text>
-
-                  {/* Description */}
-                  <Text
-                    size="sm"
-                    style={{
-                      color: '#495057',
-                      lineHeight: '1.6',
-                      marginBottom: '20px',
-                      fontSize: '13px',
-                      height: '100px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      display: '-webkit-box',
-                      WebkitLineClamp: 5,
-                      WebkitBoxOrient: 'vertical'
-                    }}
-                  >
-                    {course.description}
-                  </Text>
-
-                  {/* Footer with Rating and Enrolled */}
-                  <Flex align={"center"} justify={"space-between"} style={{ marginTop: 'auto' }}>
-                    {/* Rating */}
-                    <Group spacing={6}>
-                      <IconStar size={16} color="#ffd700" fill="#ffd700" />
-                      <Text
-                        size="sm"
-                        style={{
-                          color: '#212529',
-                          fontWeight: 600,
-                          fontSize: '13px'
-                        }}
-                      >
-                        {course.rating}
-                      </Text>
-                    </Group>
-
-                    {/* Enrolled Count */}
-                    <Group spacing={6}>
-                      <IconClockHour4 size={16} color="#6c757d" />
-                      <Text
-                        size="sm"
-                        style={{
-                          color: '#6c757d',
-                          fontSize: '13px'
-                        }}
-                      >
-                        {course.enrolled.toLocaleString()}
-                      </Text>
-                    </Group>
-                  </Flex>
-                </Box>
-              </Card>
-            </Grid.Col>
-          ))}
-        </Grid>
+                </Flex>
+              </Box>
+            </Card>
+          </Grid.Col>
+        ))}
+      </Grid>
       </Container>
       </Box>
       </>

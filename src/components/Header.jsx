@@ -157,6 +157,7 @@ const Header = () => {
 
               {/* Experience Scaler Button */}
               <Button
+              onClick={()=>navigation('/auth/login')}
                 sx={{
                   backgroundColor: '#0066ff',
                   color: 'white',
@@ -173,7 +174,7 @@ const Header = () => {
                 Login
               </Button>
                <Button
-               onClick={()=>navigation('/signup')}
+               onClick={()=>navigation('/auth/signup')}
                 bg={"#fff"}
                 c={"#0066ff"}
                 style={{border:'1px solid #0066ff'}}
