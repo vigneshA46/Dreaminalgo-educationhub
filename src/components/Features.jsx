@@ -10,7 +10,6 @@ const Features = () => {
   return (
         <Flex align={"center"} justify={"space-between"} >
             <Card
-
             onClick={()=>navigation('/trade-courses')}
             h={"100%"}
             py={"1.5rem"}

@@ -61,8 +61,6 @@ const loginhandler = async () => {
   // 4️⃣ Store full user data
   setUser(userRes);
 
-  console.log(userRes)
-
   notifications.show({
     title: 'Logged in',
     message: 'User logged in successfully',
