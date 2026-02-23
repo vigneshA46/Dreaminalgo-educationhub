@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: '/',
   withCredentials: true, // 🍪 cookies auto sent
   headers: {
     'Content-Type': 'application/json',
@@ -33,10 +33,10 @@ export const apiRequest = async (
     const response = await api({
       method,
       url: endpoint,
-      ...(data !== undefined && { data }),
+      ...(method.toUpperCase() === 'GET' ? { params: data } : { data }),
     });
 
-    return response.data; 
+    return response.data;
   } catch (error) {
     // 🔐 Access token expired
     if (
@@ -51,7 +51,10 @@ export const apiRequest = async (
       }
 
       // ❌ refresh failed → logout
-      window.location.href = '/auth/login';
+      // Prevent infinite loop if already on login/signup page
+      if (!window.location.pathname.includes('/auth/')) {
+        window.location.href = '/auth/login';
+      }
       throw new Error('Session expired');
     }
 

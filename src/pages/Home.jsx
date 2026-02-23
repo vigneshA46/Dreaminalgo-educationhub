@@ -12,37 +12,17 @@ import { useUser } from '../context/UserContext';
 
 
 const Home = () => {
-
-  const {setUser , setIsAuthenticated,setLoading} = useUser();
-
-  useEffect(()=>{
-     const restoreSession = async () => {
-    try {
-      const res = await apiRequest('POST', '/api/users/me');
-      setUser(res);
-      setIsAuthenticated(true);
-    } catch {
-      setUser(null);
-      setIsAuthenticated(false);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  restoreSession();
-
-  },[]);
-
+  // Session restoration is now handled globally in UserContext.jsx
 
   return (
     <>
-    <Header />
-  <Box w={"100vw"} px={"3rem"} py={"2rem"} >
-    <Homebanner/>
-    <Enrolled />
-    <Features /> 
-  </Box>
-  </>
+      <Header />
+      <Box w={"100vw"} px={"3rem"} py={"2rem"} >
+        <Homebanner />
+        <Enrolled />
+        <Features />
+      </Box>
+    </>
   )
 }
 
