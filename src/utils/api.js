@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+const localurl = 'http://localhost:5000'
+const cloudurl = ''
+
 const api = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://dreaminalgo-edubackend-production.up.railway.app',
   withCredentials: true, // 🍪 cookies auto sent
   headers: {
     'Content-Type': 'application/json',
