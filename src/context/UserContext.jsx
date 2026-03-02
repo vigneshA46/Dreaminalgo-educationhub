@@ -5,16 +5,44 @@ const UserContext = createContext(null);
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(false); // no automatic fetch
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    localStorage.getItem('isAuthenticated') === 'true'
+  );
+  const [loading, setLoading] = useState(true);
 
-/*   useEffect(() => {
-  const restoreSession = async () => {
+  useEffect(() => {
+    const restoreSession = async () => {
+      setLoading(true);
+      try {
+        const res = await apiRequest('POST', '/api/users/me');
+        setUser(res);
+        setIsAuthenticated(true);
+        localStorage.setItem('isAuthenticated', 'true');
+      } catch {
+        setUser(null);
+        setIsAuthenticated(false);
+        localStorage.removeItem('isAuthenticated');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    restoreSession();
+  }, []);
+  /**
+   * 
+   * Fetch user info by userId (after login)
+   */
+  const fetchUser = async (id) => {
+    if (!id) return;
+
+    setLoading(true);
     try {
-      const res = await apiRequest('POST', '/api/users/me');
+      const res = await apiRequest('GET', '/api/users/me', { id }); // use `id` key
       setUser(res);
       setIsAuthenticated(true);
-    } catch {
+    } catch (err) {
+      console.error('Fetch user failed:', err.message);
       setUser(null);
       setIsAuthenticated(false);
     } finally {
@@ -22,41 +50,18 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-  restoreSession();
-}, []);
- */
-  /**
-   * 
-   * Fetch user info by userId (after login)
-   */
-  const fetchUser = async (id) => {
-  if (!id) return;
-
-  setLoading(true);
-  try {
-    const res = await apiRequest('GET', '/api/users/me',{ id }); // use `id` key
-    setUser(res);
-    setIsAuthenticated(true);
-  } catch (err) {
-    console.error('Fetch user failed:', err.message);
-    setUser(null);
-    setIsAuthenticated(false);
-  } finally {
-    setLoading(false);
-  }
-};
-
 
   const logout = async () => {
     try {
-     const res = await apiRequest('POST', '/api/auth/logout');
-      console.log("res",res)
+      const res = await apiRequest('POST', '/api/auth/logout');
+      console.log("res", res)
     } catch (err) {
       console.error('Logout failed', err.message);
     } finally {
       setUser(null);
       setIsAuthenticated(false);
-      window.location.href = '/login';
+      localStorage.removeItem('isAuthenticated');
+      window.location.href = '/auth/login';
     }
   };
 

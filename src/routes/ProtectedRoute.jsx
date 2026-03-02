@@ -6,7 +6,7 @@ const ProtectedRoute = ({ children }) => {
 
   if (loading) return null; // or a spinner
 
-  if (!isAuthenticated) return <Navigate to="/login" />;
+  if (!isAuthenticated) return <Navigate to="/auth/login" />;
 
   return children;
 };
