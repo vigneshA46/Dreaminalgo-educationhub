@@ -160,23 +160,6 @@ const Header = () => {
             ) : (
               <Group>
                 <Button
-                  onClick={() => navigation('/auth/login')}
-                  sx={{
-                    backgroundColor: '#17a2b8',
-                    color: 'white',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    padding: '10px 24px',
-                    height: '36px',
-                    borderRadius: '6px',
-                    '&:hover': {
-                      backgroundColor: '#138496'
-                    }
-                  }}
-                >
-                  Login
-                </Button>
-                <Button
                   onClick={() => navigation('/auth/signup')}
                   variant="outline"
                   sx={{
